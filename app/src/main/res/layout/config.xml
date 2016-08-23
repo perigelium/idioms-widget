@@ -4,16 +4,52 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
+
     <EditText
         android:id="@+id/etEditPhrase"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10">
     </EditText>
+
+    <ImageView
+        android:id="@+id/backgroundImage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/initial_background"
+        android:scaleType="fitXY"/>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
     <Button
+        android:id="@+id/btn_left"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="left"
         android:onClick="onClick"
-        android:text="@string/ok">
+        android:text="@string/page_prev">
     </Button>
+
+    <Button
+        android:id="@+id/btn_right"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:onClick="onClick"
+        android:text="@string/page_next">
+    </Button>
+
+    <Button
+        android:id="@+id/btn_close_config"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|right"
+        android:onClick="onClick"
+        android:text="close">
+    </Button>
+
+    </FrameLayout>
+
 </LinearLayout>
