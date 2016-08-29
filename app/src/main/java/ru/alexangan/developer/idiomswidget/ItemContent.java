@@ -16,7 +16,7 @@ import java.util.regex.Pattern;
  *
  */
 
-public class ViewItem {
+public class ItemContent {
 
     private int itemId;
     private String rusIdiom;
@@ -27,27 +27,23 @@ public class ViewItem {
     private static final String fileExtension = ".htm";
     final static String LOG_TAG = "iw";
 
-    public ViewItem(Context context, int id)
+    public ItemContent(Context context, int id)
     {
-        Log.d(LOG_TAG, "ViewItemConstructor");
-
         this.itemId = id;
 
-        Log.d(LOG_TAG, "id= " + itemId);
+        //Log.d(LOG_TAG, "id= " + itemId);
 
         fileName = makeFileName();
 
-        Log.d(LOG_TAG, "makeFileName: " + fileName);
+        //Log.d(LOG_TAG, "makeFileName: " + fileName);
 
         String strRawHtm = readAssetsTextFile(context, parentFolder + fileName + fileExtension);
 
-        Log.d(LOG_TAG, "readAssetsTextFile");
+        //Log.d(LOG_TAG, "readAssetsTextFile");
 
         rusIdiom =  extractRusIdiomFromHtm(strRawHtm);
         engIdiom = extractEngIdiomFromHtm(strRawHtm);
         translation = extractTranslationFromHtm(strRawHtm);
-
-        Log.d(LOG_TAG, "EndConstructor");
     }
 
     private String makeFileName()
