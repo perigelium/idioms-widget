@@ -23,7 +23,7 @@ public class MyWidget extends AppWidgetProvider {
 
     final static String LOG_TAG = "iw";
     final String UPDATE_ALL_WIDGETS = "update_all_widgets";
-    static int curId = 1;
+    static int curId = 0;
     static String packageName;
 
     @Override
@@ -56,9 +56,10 @@ public class MyWidget extends AppWidgetProvider {
         super.onDeleted(context, appWidgetIds);
 
         Editor editor = context.getSharedPreferences(ConfigActivity.WIDGET_PREF, Context.MODE_PRIVATE).edit();
-        for (int widgetID : appWidgetIds)
+
+        //for (int widgetID : appWidgetIds)
         {
-            editor.remove(ConfigActivity.WIDGET_PHRASE + widgetID);
+            //editor.remove(ConfigActivity.WIDGET_PHRASE + widgetID);
         }
 
         editor.apply();
@@ -72,10 +73,9 @@ public class MyWidget extends AppWidgetProvider {
 
         displayItem(context, widgetView);
 
-        Random rnd = new Random();
-        curId = rnd.nextInt(ConfigActivity.maxId + 1);
-
         sp.edit().putInt("curId" + widgetID, curId).apply();
+
+        Log.d(LOG_TAG, "curId sent from widget: " + curId);
 
         Intent configIntent = new Intent(context, ConfigActivity.class);
         configIntent.setAction(AppWidgetManager.ACTION_APPWIDGET_CONFIGURE);
@@ -86,29 +86,32 @@ public class MyWidget extends AppWidgetProvider {
 
         appWidgetManager.updateAppWidget(widgetID, widgetView);
 
+        Random rnd = new Random();
+        curId = rnd.nextInt(ConfigActivity.maxId + 1);
+
         Log.d(LOG_TAG, "widget updated");
     }
 
     private static void displayItem(Context context, RemoteViews widgetView)
     {
-        ViewItem viewItemInstance = new ViewItem(context, curId);
+        ItemContent itemContentInstance = new ItemContent(context, curId);
 
-        String imageFileName = viewItemInstance.getImageFileName();
+        String imageFileName = itemContentInstance.getImageFileName();
 
-        Log.d(LOG_TAG, "imageFileName= " + imageFileName);
+        //Log.d(LOG_TAG, "imageFileName= " + imageFileName);
 
         int imageId = context.getResources().getIdentifier(imageFileName, "drawable", packageName);
 
-        Log.d(LOG_TAG, "imageId= " + imageId);
+        //Log.d(LOG_TAG, "imageId= " + imageId);
 
         widgetView.setImageViewResource(R.id.backgroundImage, imageId);
 
-        String rusIdiom = viewItemInstance.getRusIdiom();
-        Log.d(LOG_TAG, "rusIdiom= " + rusIdiom);
-        String engIdiom = viewItemInstance.getEngIdiom();
-        Log.d(LOG_TAG, "engIdiom= " + engIdiom);
-        String translation = viewItemInstance.getTranslation();
-        Log.d(LOG_TAG, "translation= " + translation);
+        String rusIdiom = itemContentInstance.getRusIdiom();
+        //Log.d(LOG_TAG, "rusIdiom= " + rusIdiom);
+        String engIdiom = itemContentInstance.getEngIdiom();
+        //Log.d(LOG_TAG, "engIdiom= " + engIdiom);
+        String translation = itemContentInstance.getTranslation();
+        //Log.d(LOG_TAG, "translation= " + translation);
 
         String engStr = engIdiom.length() == 1 ? translation : engIdiom;
         String widgetText = rusIdiom + "\n" + engStr;

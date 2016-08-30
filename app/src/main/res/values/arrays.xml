@@ -1,2 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+
+    <string-array name="languages_display_mode">
+        <item>Everything</item>
+        <item>Only russian text</item>
+        <item>Only english text</item>
+    </string-array>
+
+    <string-array name="pages_display_mode">
+        <item>All pages successively</item>
+        <item>All pages shuffled</item>
+        <item>Do not display hidden pages</item>
+    </string-array>
+
+</resources>

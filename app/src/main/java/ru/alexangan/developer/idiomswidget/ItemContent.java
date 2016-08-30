@@ -31,15 +31,9 @@ public class ItemContent {
     {
         this.itemId = id;
 
-        //Log.d(LOG_TAG, "id= " + itemId);
-
         fileName = makeFileName();
 
-        //Log.d(LOG_TAG, "makeFileName: " + fileName);
-
         String strRawHtm = readAssetsTextFile(context, parentFolder + fileName + fileExtension);
-
-        //Log.d(LOG_TAG, "readAssetsTextFile");
 
         rusIdiom =  extractRusIdiomFromHtm(strRawHtm);
         engIdiom = extractEngIdiomFromHtm(strRawHtm);

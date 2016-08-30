@@ -22,12 +22,17 @@
             </meta-data>
         </receiver>
         <activity
-            android:name="ConfigActivity">
+            android:name="ConfigActivity" android:screenOrientation="portrait"
+            android:configChanges="keyboardHidden|orientation|screenSize">
             <intent-filter>
                 <action
                     android:name="android.appwidget.action.APPWIDGET_CONFIGURE">
                 </action>
             </intent-filter>
+        </activity>
+        <activity
+            android:name="PrefActivity"
+            android:label="@string/settings_title">
         </activity>
     </application>
 

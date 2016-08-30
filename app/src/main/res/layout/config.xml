@@ -1,55 +1,82 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <EditText
-        android:id="@+id/etEditPhrase"
+    <LinearLayout
+        android:id="@+id/AdLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ems="10">
-    </EditText>
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical" >
+    </LinearLayout>
 
-    <ImageView
-        android:id="@+id/backgroundImage"
+    <android.support.v4.view.ViewPager
+        android:id="@+id/pager"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:src="@drawable/initial_background"
-        android:scaleType="fitXY"/>
+        android:layout_above="@+id/AdLayout"/>
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-    <Button
-        android:id="@+id/btn_left"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="left"
-        android:onClick="onClick"
-        android:text="@string/page_prev">
-    </Button>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/swipe_left"
+            android:layout_gravity="top|left" />
 
-    <Button
-        android:id="@+id/btn_right"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="right"
-        android:onClick="onClick"
-        android:text="@string/page_next">
-    </Button>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/swipe_right"
+            android:layout_gravity="top|right" />
 
-    <Button
-        android:id="@+id/btn_close_config"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|right"
-        android:onClick="onClick"
-        android:text="close">
-    </Button>
+        <TableLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:stretchColumns="*"
+            android:layout_gravity="end|bottom">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@android:color/darker_gray"/>
+
+            <TableRow
+                android:id="@+id/tableRow3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="bottom" >
+
+            <Button
+                android:id="@+id/btn_settings"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|start"
+                android:onClick="onClick"
+                android:padding="1dp"
+                android:text="@string/Settings">
+            </Button>
+
+            <Button
+                android:id="@+id/btn_close_config"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:onClick="onClick"
+                android:padding="1dp"
+                android:text="@string/Close"
+                android:layout_column="2">
+            </Button>
+
+            </TableRow>
+        </TableLayout>
+
 
     </FrameLayout>
 
-</LinearLayout>
+</RelativeLayout>

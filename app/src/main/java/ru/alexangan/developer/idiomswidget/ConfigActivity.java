@@ -6,36 +6,44 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.AssetManager;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.util.Log;
+import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
-import android.widget.EditText;
-import android.widget.ImageView;
 
 import java.io.IOException;
 
 public class ConfigActivity extends Activity {
 
     final static String LOG_TAG = "iw";
+    ViewPager viewPager;
+    PagerAdapter adapter;
 
-    public final static String WIDGET_PREF = "widget_pref";
-    public static String WIDGET_PHRASE = "Type your phrase_";
+    public final static String WIDGET_PREF = "widget_prefs";
 
     int widgetID = AppWidgetManager.INVALID_APPWIDGET_ID;
     Intent resultValue;
     SharedPreferences sharedPrefs;
-    EditText etEditPhrase;
-    ImageView imageView;
-    static String packageName;
-    int curId = 1;
-    public static int maxId = 1;
+    int curId = 0;
+    public static int maxId = 0;
+    public static String pageDisplayMode, langDisplayMode = "Everything";
+    static String HiddenPagesIdsSet = ",";
+
 
     protected void onCreate(Bundle savedInstanceState)
     {
+        //setTheme(R.style.AppTheme);
         super.onCreate(savedInstanceState);
+
+        pageDisplayMode = this.getString(R.string.pageDisplayMode_NoHidden);
+        langDisplayMode = this.getString(R.string.languages_display_mode_everything);
 
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();
-        packageName = getPackageName();
 
         if (extras != null) {
             widgetID = extras.getInt(AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID);
@@ -54,10 +62,7 @@ public class ConfigActivity extends Activity {
 
         sharedPrefs = getSharedPreferences(WIDGET_PREF, MODE_PRIVATE);
 
-        etEditPhrase = (EditText) findViewById(R.id.etEditPhrase);
-        imageView = (ImageView) findViewById(R.id.backgroundImage);
-
-        curId = sharedPrefs.getInt("curId" + widgetID, 1);
+        curId = sharedPrefs.getInt("curId" + widgetID, 0);
 
         String[] Files;
 
@@ -71,75 +76,127 @@ public class ConfigActivity extends Activity {
             return;
         }
 
-        maxId = Files.length;
+        loadPrefs();
 
-        Log.d(LOG_TAG, "arrayHtmPathes size: " + Files.length);
+        maxId = Files.length - 1;
 
-        displayItem();
+        Log.d(LOG_TAG, "maxId: " + maxId);
 
-        //if (cnt == -1) sp.edit().putInt(WIDGET_COUNT + widgetID, 0);
+        viewPager = (ViewPager) findViewById(R.id.pager);
+        adapter = new ViewPagerAdapter(ConfigActivity.this);
+        viewPager.setAdapter(adapter);
+        viewPager.setCurrentItem(curId);
     }
 
-    public void onClick(View v){
-
-        //sharedPrefs.edit().putString(WIDGET_PHRASE + widgetID, etEditPhrase.getText().toString()).commit();
-
-        //MyWidget.updateWidget(this, AppWidgetManager.getInstance(this), widgetID);
-
-        if(v.getId() == R.id.btn_left)
-        {
-            curId--;
-
-            if (curId < 1)  // cycled show of phrases
-            {
-                curId = maxId;
-            }
-
-            displayItem();
-        }
-
-        if(v.getId() == R.id.btn_right)
-        {
-            curId++;
-
-            if (curId == ConfigActivity.maxId + 1)  // cycled show of phrases
-            {
-                curId = 1;
-            }
-
-            displayItem();
-        }
+    public void onClick(View v)
+    {
 
         if(v.getId() == R.id.btn_close_config)
         {
             setResult(RESULT_OK, resultValue);
+
+            savePrefs();
+
             finish();
+        }
+
+        if(v.getId() == R.id.btn_settings)
+        {
+            Intent intent = new Intent(this, PrefActivity.class);
+            startActivityForResult(intent, 0);
         }
     }
 
-    private void displayItem()
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu)
     {
-        ViewItem viewItemInstance = new ViewItem(getApplicationContext(), curId);
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
 
-        String imageFileName = viewItemInstance.getImageFileName();
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        return super.onOptionsItemSelected(item);
+    }
 
-        Log.d(LOG_TAG, "imageFileName= " + imageFileName);
+    public void onSettingsMenuClick(MenuItem item)
+    {
+        Intent intent = new Intent(this, PrefActivity.class);
+        startActivity(intent);
+    }
 
-        int imageId = getResources().getIdentifier(imageFileName, "drawable", packageName);
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        SharedPreferences sPrefs = PreferenceManager.getDefaultSharedPreferences(this);
 
-        Log.d(LOG_TAG, "imageId= " + imageId);
+        langDisplayMode = sPrefs.getString(PrefActivity.APP_PREFERENCES_LANG_DISPLAY_MODE, getString(R.string.languages_display_mode_everything));
 
-        imageView.setImageResource(imageId);
+        Log.d(LOG_TAG, "langDisplayMode= " + langDisplayMode);
 
-        String rusIdiom = viewItemInstance.getRusIdiom();
-        Log.d(LOG_TAG, "rusIdiom= " + rusIdiom);
-        String engIdiom = viewItemInstance.getEngIdiom();
-        Log.d(LOG_TAG, "engIdiom= " + engIdiom);
-        String translation = viewItemInstance.getTranslation();
-        Log.d(LOG_TAG, "translation= " + translation);
+        pageDisplayMode = sPrefs.getString(PrefActivity.APP_PREFERENCES_PAGE_DISPLAY_MODE, getString(R.string.pageDisplayMode_NoHidden));
 
-        String fullText = rusIdiom + "\n\n" + translation + "\n\n"+ engIdiom;
+        Log.d(LOG_TAG, "pageDisplayMode= " + pageDisplayMode);
 
-        etEditPhrase.setText(fullText);
+        /*
+        Boolean resetEvent = sharedPrefs.getBoolean(PrefActivity.APP_PREFERENCES_RESET_SETTINGS, false);
+
+        if(resetEvent == true)
+        {
+            for (int i = 0; i <= maxId; i++)
+            {
+                ViewPagerAdapter.arrPageDisplayMode.add(0);
+            }
+        }
+        */
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event)  {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+
+            savePrefs();
+
+            finish();
+
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
+    private void loadPrefs()
+    {
+        sharedPrefs = getPreferences(MODE_PRIVATE);
+
+        HiddenPagesIdsSet = sharedPrefs.getString("HiddenPagesIdsSet", ",");
+        String [] hiddenPagesIds = HiddenPagesIdsSet.split(",");
+
+        for(String curA : hiddenPagesIds)
+        {
+            try
+            {
+                int curN = Integer.parseInt(curA);
+                ViewPagerAdapter.arrPageDisplayMode.add(curN);
+            }
+            catch(NumberFormatException nfe)
+            {
+            }
+        }
+
+        Log.d(LOG_TAG, "loadPrefs");
+    }
+
+    private void savePrefs()
+    {
+        sharedPrefs = getPreferences(MODE_PRIVATE);
+        SharedPreferences.Editor ed = sharedPrefs.edit();
+
+        ed.putString("HiddenPagesIdsSet", HiddenPagesIdsSet);
+
+        Log.d(LOG_TAG, "savePrefs");
+
+        ed.commit();
     }
 }
+
