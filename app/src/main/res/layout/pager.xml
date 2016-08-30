@@ -9,6 +9,7 @@
         android:id="@+id/etEditPhrase"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:inputType="none"
         android:ems="10">
     </EditText>
 
@@ -33,7 +34,7 @@
                 android:id="@+id/pageModeLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="end"
+                android:layout_gravity="center"
                 android:orientation="horizontal">
 
                 <TextView

@@ -191,12 +191,17 @@ public class ViewPagerAdapter extends PagerAdapter implements CompoundButton.OnC
         }
 
         if(ConfigActivity.langDisplayMode != null
-                && !ConfigActivity.langDisplayMode.equals(mContext.getString(R.string.lang_mode_only_Russian)))
+                && ! ConfigActivity.langDisplayMode.equals(mContext.getString(R.string.lang_mode_only_Russian)))
         {
             translation = itemContentInstance.getTranslation();
-            fullText += translation;
             engIdiom = itemContentInstance.getEngIdiom();
-            fullText += "\n\n" + engIdiom;
+
+            if(!translation.equals(engIdiom))
+            {
+                fullText += translation + "\n\n";
+            }
+
+            fullText += engIdiom;
         }
 
         etEditPhrase.setText(fullText);

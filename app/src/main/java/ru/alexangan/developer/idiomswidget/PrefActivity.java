@@ -1,10 +1,15 @@
 package ru.alexangan.developer.idiomswidget;
 
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -24,7 +29,7 @@ public class PrefActivity extends PreferenceActivity
     public static final String APP_PREFERENCES_LANG_DISPLAY_MODE = "languages_display_mode";
     public static final String APP_PREFERENCES_PAGE_DISPLAY_MODE = "pages_display_mode";
     public static String langDisplayMode, pageDisplayMode;
-    //private LinearLayout rootView, buttonView;
+    final int DIALOG_ABOUT = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,4 +101,49 @@ public class PrefActivity extends PreferenceActivity
     protected void onPause() {
         super.onPause();
     }
+
+    public void onAboutClick(View view)
+    {
+        showDialog(DIALOG_ABOUT);
+    }
+
+    protected Dialog onCreateDialog(int id) {
+        if (id == DIALOG_ABOUT) {
+            AlertDialog.Builder adb = new AlertDialog.Builder(this);
+            // заголовок
+            adb.setTitle(R.string.about_prog_title);
+            // сообщение
+            adb.setMessage(R.string.about_prog_text);
+            // иконка
+            adb.setIcon(android.R.drawable.ic_dialog_info);
+            // кнопка положительного ответа
+            //adb.setPositiveButton(R.string.Yes, myClickListener);
+            // кнопка отрицательного ответа
+            //adb.setNegativeButton(R.string.No, myClickListener);
+            // кнопка нейтрального ответа
+            adb.setNeutralButton(R.string.Close, myClickListener);
+            // создаем диалог
+            return adb.create();
+        }
+        return super.onCreateDialog(id);
+    }
+
+    DialogInterface.OnClickListener myClickListener = new DialogInterface.OnClickListener() {
+        public void onClick(DialogInterface dialog, int which)
+        {
+            switch (which)
+            {
+                case Dialog.BUTTON_POSITIVE:
+                    finish();
+                    break;
+
+                case Dialog.BUTTON_NEGATIVE:
+                    finish();
+                    break;
+
+                case Dialog.BUTTON_NEUTRAL:
+                    break;
+            }
+        }
+    };
 }

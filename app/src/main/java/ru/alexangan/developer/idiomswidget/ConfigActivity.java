@@ -108,25 +108,6 @@ public class ConfigActivity extends Activity {
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu)
-    {
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item)
-    {
-        return super.onOptionsItemSelected(item);
-    }
-
-    public void onSettingsMenuClick(MenuItem item)
-    {
-        Intent intent = new Intent(this, PrefActivity.class);
-        startActivity(intent);
-    }
-
-    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data)
     {
         SharedPreferences sPrefs = PreferenceManager.getDefaultSharedPreferences(this);

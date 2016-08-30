@@ -58,8 +58,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom|start"
                 android:onClick="onClick"
-                android:padding="1dp"
-                android:text="@string/Settings">
+                android:padding="3dp"
+                android:text="@string/settings_title">
             </Button>
 
             <Button
@@ -68,7 +68,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
                 android:onClick="onClick"
-                android:padding="1dp"
+                android:padding="3dp"
                 android:text="@string/Close"
                 android:layout_column="2">
             </Button>
