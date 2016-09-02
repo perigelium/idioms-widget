@@ -5,15 +5,14 @@ package ru.alexangan.developer.idiomswidget;
  *
  */
 import android.content.Context;
-import android.support.v4.util.ArrayMap;
 import android.support.v4.view.PagerAdapter;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ToggleButton;
@@ -21,7 +20,7 @@ import android.widget.ToggleButton;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class ViewPagerAdapter extends PagerAdapter implements CompoundButton.OnCheckedChangeListener
+public class ViewPagerAdapter extends PagerAdapter //implements CompoundButton.OnCheckedChangeListener
 {
     private Context mContext;
     LayoutInflater mInflater;
@@ -31,8 +30,8 @@ public class ViewPagerAdapter extends PagerAdapter implements CompoundButton.OnC
     ImageView imageView;
     final static int maxId = ConfigActivity.maxId;
     public static ArrayList<Integer> arrPageDisplayMode;
-    private static ArrayList<Integer> toggleBtnIds;
-    ToggleButton toggleBtnHidePage;
+    //private static ArrayList<Integer> toggleBtnIds;
+    //ToggleButton toggleBtnHidePage;
     static int indexCurId;
 
     public ViewPagerAdapter(Context context)
@@ -41,6 +40,8 @@ public class ViewPagerAdapter extends PagerAdapter implements CompoundButton.OnC
         packageName = mContext.getPackageName();
 
         arrPageDisplayMode = new ArrayList<>(maxId);
+
+        /*
         toggleBtnIds = new ArrayList<>(maxId);
 
         for (int i = 0; i <= maxId; i++)
@@ -50,6 +51,7 @@ public class ViewPagerAdapter extends PagerAdapter implements CompoundButton.OnC
         }
 
         Log.d(LOG_TAG, "views.size= " + toggleBtnIds.size());
+        */
     }
 
     @Override
@@ -77,14 +79,14 @@ public class ViewPagerAdapter extends PagerAdapter implements CompoundButton.OnC
 
         etEditPhrase = (EditText) itemView.findViewById(R.id.etEditPhrase);
         imageView = (ImageView) itemView.findViewById(R.id.backgroundImage);
-        toggleBtnHidePage = (ToggleButton) itemView.findViewById(R.id.toggleBtnHidePage);
+        //toggleBtnHidePage = (ToggleButton) itemView.findViewById(R.id.toggleBtnHidePage);
 
 
-            toggleBtnHidePage.setId(curId);
-            toggleBtnIds.set(curId, toggleBtnHidePage.getId());
-            Log.d(LOG_TAG, "btnViews.add(curId, itemView) " + curId);
+            //toggleBtnHidePage.setId(curId);
+            //toggleBtnIds.set(curId, toggleBtnHidePage.getId());
+            //Log.d(LOG_TAG, "btnViews.add(curId, itemView) " + curId);
 
-        setPageDisplayMode(indexCurId);
+        //setPageDisplayMode(indexCurId);
 
         setItemContentView(curId);
 
@@ -103,11 +105,10 @@ public class ViewPagerAdapter extends PagerAdapter implements CompoundButton.OnC
             Random rnd = new Random();
             curId = rnd.nextInt(maxId + 1);
         }
-
+/*
         if(ConfigActivity.pageDisplayMode != null
                 && ConfigActivity.pageDisplayMode.equals(mContext.getString(R.string.pageDisplayMode_NoHidden)))
         {
-            int origCurId = curId;
             Random rnd = new Random();
 
                 while(arrPageDisplayMode.get(curId) == -1)
@@ -120,6 +121,7 @@ public class ViewPagerAdapter extends PagerAdapter implements CompoundButton.OnC
                     Log.d(LOG_TAG, "curId= " + curId);
                 }
         }
+*/
 
         if(curId < 0)
         {
@@ -136,6 +138,7 @@ public class ViewPagerAdapter extends PagerAdapter implements CompoundButton.OnC
         return curId;
     }
 
+    /*
     private void setPageDisplayMode(int indexCurId)
     {
 
@@ -160,13 +163,14 @@ public class ViewPagerAdapter extends PagerAdapter implements CompoundButton.OnC
 
         toggleBtnHidePage.setOnCheckedChangeListener(this);
     }
+*/
 
     @Override
     public void destroyItem(ViewGroup container, int position, Object object)
     {
         Log.d(LOG_TAG, "Removing view with position: " + position);
 
-        (container).removeView((LinearLayout) object);
+        (container).removeView((FrameLayout) object);
     }
 
     private void setItemContentView(int curId)
@@ -177,7 +181,7 @@ public class ViewPagerAdapter extends PagerAdapter implements CompoundButton.OnC
 
         String imageFileName = itemContentInstance.getImageFileName();
 
-        //Log.d(LOG_TAG, "ConfigActivity.langDisplayMode= " + ConfigActivity.langDisplayMode);
+        Log.d(LOG_TAG, "ConfigActivity.langDisplayMode= " + ConfigActivity.langDisplayMode);
 
         int imageId = mContext.getResources().getIdentifier(imageFileName, "drawable", packageName);
 
@@ -191,7 +195,7 @@ public class ViewPagerAdapter extends PagerAdapter implements CompoundButton.OnC
         }
 
         if(ConfigActivity.langDisplayMode != null
-                && ! ConfigActivity.langDisplayMode.equals(mContext.getString(R.string.lang_mode_only_Russian)))
+                && !ConfigActivity.langDisplayMode.equals(mContext.getString(R.string.lang_mode_only_Russian)))
         {
             translation = itemContentInstance.getTranslation();
             engIdiom = itemContentInstance.getEngIdiom();
@@ -207,6 +211,7 @@ public class ViewPagerAdapter extends PagerAdapter implements CompoundButton.OnC
         etEditPhrase.setText(fullText);
     }
 
+    /*
     @Override
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
     {
@@ -223,4 +228,6 @@ public class ViewPagerAdapter extends PagerAdapter implements CompoundButton.OnC
             Log.d(LOG_TAG, "arrPageDisplayMode.add 0: " + btnPos);
         }
     }
+    */
+
 }

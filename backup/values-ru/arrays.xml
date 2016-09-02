@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="languages_display_mode">
+        <item>Текст на обоих языках</item>
+        <item>Только английский текст</item>
+        <item>Только русский текст</item>
+    </string-array>
+
+    <string-array name="pages_display_mode">
+        <item>Последовательно</item>
+        <item>Перемешать</item>
+        <item>Не показывать скрытые страницы</item>
+    </string-array>
+
+</resources>

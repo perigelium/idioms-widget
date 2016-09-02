@@ -82,7 +82,7 @@ public class MyWidget extends AppWidgetProvider {
         configIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetID);
         PendingIntent pIntent = PendingIntent.getActivity(context, widgetID, configIntent, 0);
 
-        widgetView.setOnClickPendingIntent(R.id.backgroundImage, pIntent);
+        widgetView.setOnClickPendingIntent(R.id.clickLayout, pIntent);
 
         appWidgetManager.updateAppWidget(widgetID, widgetView);
 

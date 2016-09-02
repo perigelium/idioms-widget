@@ -1,0 +1,30 @@
+<resources>
+    <string name="app_name">Русские фразеологизмы в картинках</string>
+
+    <string name="swipe_left"><![CDATA[<<<]]></string>
+    <string name="swipe_right"><![CDATA[>>>]]></string>
+    <string name="Close">Закрыть</string>
+    <string name="settings_title">Настройки</string>
+    <string name="languages_display_mode_everything">Текст на обоих языках</string>
+    <string name="lang_mode_only_English">Только английский текст</string>
+    <string name="lang_mode_only_Russian">Только русский текст</string>
+    <string name="pageDisplayMode_NoHidden">Не показывать скрытые страницы</string>
+    <string name="pagesDisplayMode_Shuffle">Перемешатьстраницы</string>
+    <string name="tv_Hidden_page">Скрытая страница</string>
+    <string name="Preferences_title">Настройки</string>
+    <string name="Yes">Да</string>
+    <string name="No">Нет</string>
+    <string name="about_prog_title">Русские фразеологизмы в картинках</string>
+    <string name="about_prog_text">
+\n
+        автор М.И.Дубровин,
+        художник В.И.Тильман,
+        электронная версия А.Юринсон.
+
+         \n\n\t © Александр Анган 2016
+
+    </string>
+
+
+
+</resources>

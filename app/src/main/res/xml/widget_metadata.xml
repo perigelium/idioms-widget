@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:configure="ru.alexangan.developer.idiomswidget.ConfigActivity"
     android:initialLayout="@layout/widget"
-    android:minHeight="146dp"
-    android:minWidth="214dp"
+    android:minHeight="110dp"
+    android:minWidth="180dp"
     android:updatePeriodMillis="0">
 </appwidget-provider>

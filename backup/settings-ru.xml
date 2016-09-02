@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <ListPreference
+    android:key="languages_display_mode"
+    android:title="Языковой режим"
+    android:summary="Выберите языковой режим"
+    android:defaultValue="Текст на обоих языках"
+    android:entries="@array/languages_display_mode"
+    android:entryValues="@array/languages_display_mode"
+    android:dialogTitle="Языковой режим" />
+
+    <ListPreference
+        android:key="pages_display_mode"
+        android:title="Режим отображения страниц"
+        android:summary="Выберите режим отображения страниц"
+        android:defaultValue="Не показывать скрытые страницы"
+        android:entries="@array/pages_display_mode"
+        android:entryValues="@array/pages_display_mode"
+        android:dialogTitle="Режим отображения страниц" />
+
+</PreferenceScreen>

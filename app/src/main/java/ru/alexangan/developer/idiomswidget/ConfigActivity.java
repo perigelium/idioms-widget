@@ -11,8 +11,6 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.KeyEvent;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 
 import java.io.IOException;
@@ -29,9 +27,10 @@ public class ConfigActivity extends Activity {
     Intent resultValue;
     SharedPreferences sharedPrefs;
     int curId = 0;
+    static Boolean widgetFirstStart = true;
     public static int maxId = 0;
-    public static String pageDisplayMode, langDisplayMode = "Everything";
-    static String HiddenPagesIdsSet = ",";
+    public static String pageDisplayMode, langDisplayMode;
+    //static String HiddenPagesIdsSet = ",";
 
 
     protected void onCreate(Bundle savedInstanceState)
@@ -39,8 +38,9 @@ public class ConfigActivity extends Activity {
         //setTheme(R.style.AppTheme);
         super.onCreate(savedInstanceState);
 
-        pageDisplayMode = this.getString(R.string.pageDisplayMode_NoHidden);
-        langDisplayMode = this.getString(R.string.languages_display_mode_everything);
+        langDisplayMode = this.getString(R.string.lang_mode_everything);
+        pageDisplayMode = this.getString(R.string.pagesDisplayMode_All);
+
 
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();
@@ -49,14 +49,21 @@ public class ConfigActivity extends Activity {
             widgetID = extras.getInt(AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID);
         }
 
-        if (widgetID == AppWidgetManager.INVALID_APPWIDGET_ID) {
-            finish();
-        }
+        if (widgetID != AppWidgetManager.INVALID_APPWIDGET_ID)
+        {
 
         resultValue = new Intent();
         resultValue.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetID);
 
         setResult(RESULT_CANCELED, resultValue); // initial set negative answer
+
+            if(widgetFirstStart)
+            {
+                setResult(RESULT_OK, resultValue);
+                widgetFirstStart = false;
+                finish();
+            }
+        }
 
         setContentView(R.layout.config);
 
@@ -76,7 +83,7 @@ public class ConfigActivity extends Activity {
             return;
         }
 
-        loadPrefs();
+        //loadPrefs();
 
         maxId = Files.length - 1;
 
@@ -95,7 +102,7 @@ public class ConfigActivity extends Activity {
         {
             setResult(RESULT_OK, resultValue);
 
-            savePrefs();
+            //savePrefs();
 
             finish();
         }
@@ -112,11 +119,11 @@ public class ConfigActivity extends Activity {
     {
         SharedPreferences sPrefs = PreferenceManager.getDefaultSharedPreferences(this);
 
-        langDisplayMode = sPrefs.getString(PrefActivity.APP_PREFERENCES_LANG_DISPLAY_MODE, getString(R.string.languages_display_mode_everything));
+        langDisplayMode = sPrefs.getString(PrefActivity.APP_PREFERENCES_LANG_DISPLAY_MODE, getString(R.string.lang_mode_everything));
 
         Log.d(LOG_TAG, "langDisplayMode= " + langDisplayMode);
 
-        pageDisplayMode = sPrefs.getString(PrefActivity.APP_PREFERENCES_PAGE_DISPLAY_MODE, getString(R.string.pageDisplayMode_NoHidden));
+        pageDisplayMode = sPrefs.getString(PrefActivity.APP_PREFERENCES_PAGE_DISPLAY_MODE, getString(R.string.pagesDisplayMode_All));
 
         Log.d(LOG_TAG, "pageDisplayMode= " + pageDisplayMode);
 
@@ -137,7 +144,8 @@ public class ConfigActivity extends Activity {
     public boolean onKeyDown(int keyCode, KeyEvent event)  {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
 
-            savePrefs();
+            //savePrefs();
+            setResult(RESULT_OK, resultValue);
 
             finish();
 
@@ -146,6 +154,7 @@ public class ConfigActivity extends Activity {
         return super.onKeyDown(keyCode, event);
     }
 
+    /*
     private void loadPrefs()
     {
         sharedPrefs = getPreferences(MODE_PRIVATE);
@@ -162,6 +171,7 @@ public class ConfigActivity extends Activity {
             }
             catch(NumberFormatException nfe)
             {
+                Log.d(LOG_TAG, "Unable to refresh hidden pages array");
             }
         }
 
@@ -177,7 +187,8 @@ public class ConfigActivity extends Activity {
 
         Log.d(LOG_TAG, "savePrefs");
 
-        ed.commit();
+        ed.apply();
     }
+    */
 }
 

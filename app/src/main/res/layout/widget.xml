@@ -3,7 +3,9 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:id="@+id/clickLayout"
+    android:clickable="true">
 
     <TextView
         android:id="@+id/tvPhrase"
@@ -11,7 +13,8 @@
         android:layout_height="wrap_content"
         android:background="#ffffffff"
         android:textColor="#ff000000"
-        android:textSize="16dp">
+        android:textSize="16dp"
+        android:clickable="false">
     </TextView>
 
     <ImageView
@@ -19,6 +22,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:src="@drawable/initial_background"
-        android:scaleType="fitXY"/>
+        android:scaleType="fitXY"
+        android:clickable="false"/>
 
 </LinearLayout>

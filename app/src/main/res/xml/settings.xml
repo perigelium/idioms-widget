@@ -2,21 +2,21 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
     <ListPreference
-    android:key="languages_display_mode"
-    android:title="Language mode"
-    android:summary="Select language mode"
-    android:defaultValue="Everything"
+    android:key="lang_display_mode"
+    android:title="@string/lang_mode"
+    android:summary="@string/Select_lang_mode"
+    android:defaultValue="@string/lang_mode_everything"
     android:entries="@array/languages_display_mode"
     android:entryValues="@array/languages_display_mode"
-    android:dialogTitle="Select language mode" />
+    android:dialogTitle="@string/lang_display_mode_dialog_title" />
 
     <ListPreference
         android:key="pages_display_mode"
-        android:title="Pages display mode"
-        android:summary="Select pages display mode"
-        android:defaultValue="Do not display hidden pages"
+        android:title="@string/page_display_mode_title"
+        android:summary="@string/page_display_mode_summary"
+        android:defaultValue="@string/pagesDisplayMode_All"
         android:entries="@array/pages_display_mode"
         android:entryValues="@array/pages_display_mode"
-        android:dialogTitle="Select pages display mode" />
+        android:dialogTitle="@string/page_display_mode_dialog_title" />
 
 </PreferenceScreen>

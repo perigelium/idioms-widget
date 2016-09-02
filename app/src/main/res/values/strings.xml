@@ -1,23 +1,31 @@
 <resources>
-    <string name="app_name">Russian Idioms in pictures</string>
+    <string name="app_name">Russian idioms in pictures</string>
 
-    <string name="swipe_left"><![CDATA[<<<]]></string>
-    <string name="swipe_right"><![CDATA[>>>]]></string>
+    <string name="swipe_left" translatable="false"><![CDATA[<<<]]></string>
+    <string name="swipe_right" translatable="false"><![CDATA[>>>]]></string>
     <string name="Close">Close</string>
     <string name="settings_title">Settings</string>
-    <string name="languages_display_mode_everything">Everything</string>
+    <string name="lang_mode">Language mode</string>
+    <string name="Select_lang_mode">Select language mode</string>
+    <string name="lang_mode_everything">Everything</string>
     <string name="lang_mode_only_English">Only english text</string>
     <string name="lang_mode_only_Russian">Only russian text</string>
-    <string name="pageDisplayMode_NoHidden">Do not display hidden pages</string>
+    <string name="lang_display_mode_dialog_title">Select language mode</string>
+<!--    <string name="pageDisplayMode_NoHidden">Do not display hidden pages</string> -->
+    <string name="pagesDisplayMode_All">All pages successively</string>
     <string name="pagesDisplayMode_Shuffle">All pages shuffled</string>
+    <string name="page_display_mode_title">Pages display mode</string>
+    <string name="page_display_mode_summary">Select pages display mode</string>
+    <string name="page_display_mode_dialog_title">Select pages display mode</string>
     <string name="tv_Hidden_page">Hidden page</string>
     <string name="Preferences_title">Preferences</string>
     <string name="Yes">Yes</string>
     <string name="No">No</string>
-    <string name="about_prog_title">About Russian idioms in pictures</string>
+    <string name="About">About</string>
+    <string name="about_prog_title">Russian idioms in pictures</string>
     <string name="about_prog_text">
 \n
-        author M.I.Dubrovin,
+        book of M.I.Dubrovin,
         painter V.I.Tilman,
         adapted by A.Jurinson.
 \n\n
@@ -27,7 +35,5 @@
          \n\n\t © Alexandr Angan 2016
 
     </string>
-
-
 
 </resources>

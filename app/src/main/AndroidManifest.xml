@@ -25,9 +25,11 @@
             android:name="ConfigActivity" android:screenOrientation="portrait"
             android:configChanges="keyboardHidden|orientation|screenSize">
             <intent-filter>
-                <action
-                    android:name="android.appwidget.action.APPWIDGET_CONFIGURE">
-                </action>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE"/>
+                
             </intent-filter>
         </activity>
         <activity

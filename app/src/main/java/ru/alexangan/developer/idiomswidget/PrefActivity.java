@@ -2,20 +2,13 @@ package ru.alexangan.developer.idiomswidget;
 
 import android.app.Dialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
-import android.widget.Button;
-import android.widget.LinearLayout;
-import android.widget.ListView;
 
 /**
  * Created by Administrator on 24.08.16.
@@ -25,8 +18,7 @@ public class PrefActivity extends PreferenceActivity
 {
     public final static String LOG_TAG = "iw";
     static SharedPreferences sharedPrefs;
-    public static final String APP_PREFERENCES_RESET_SETTINGS = "PrefActivity_prefs";
-    public static final String APP_PREFERENCES_LANG_DISPLAY_MODE = "languages_display_mode";
+    public static final String APP_PREFERENCES_LANG_DISPLAY_MODE = "lang_display_mode";
     public static final String APP_PREFERENCES_PAGE_DISPLAY_MODE = "pages_display_mode";
     public static String langDisplayMode, pageDisplayMode;
     final int DIALOG_ABOUT = 1;
@@ -83,7 +75,7 @@ public class PrefActivity extends PreferenceActivity
         if (sharedPrefs.contains(APP_PREFERENCES_LANG_DISPLAY_MODE))
         {
 
-            langDisplayMode = sharedPrefs.getString(APP_PREFERENCES_LANG_DISPLAY_MODE, getString(R.string.languages_display_mode_everything));
+            langDisplayMode = sharedPrefs.getString(APP_PREFERENCES_LANG_DISPLAY_MODE, getString(R.string.lang_mode_everything));
 
             Log.d(LOG_TAG, "langDisplayingMode= " + langDisplayMode);
         }
@@ -91,7 +83,7 @@ public class PrefActivity extends PreferenceActivity
         if (sharedPrefs.contains(APP_PREFERENCES_PAGE_DISPLAY_MODE))
         {
 
-            pageDisplayMode = sharedPrefs.getString(APP_PREFERENCES_PAGE_DISPLAY_MODE, getString(R.string.pageDisplayMode_NoHidden));
+            pageDisplayMode = sharedPrefs.getString(APP_PREFERENCES_PAGE_DISPLAY_MODE, getString(R.string.pagesDisplayMode_All));
 
             Log.d(LOG_TAG, "pageDisplayingMode= " + pageDisplayMode);
         }
@@ -107,11 +99,14 @@ public class PrefActivity extends PreferenceActivity
         showDialog(DIALOG_ABOUT);
     }
 
-    protected Dialog onCreateDialog(int id) {
+    protected Dialog onCreateDialog(int id)
+    {
         if (id == DIALOG_ABOUT) {
+            String aboutTitle = getString(R.string.about_prog_title) + " 1." + BuildConfig.VERSION_CODE;
+
             AlertDialog.Builder adb = new AlertDialog.Builder(this);
             // заголовок
-            adb.setTitle(R.string.about_prog_title);
+            adb.setTitle(aboutTitle);
             // сообщение
             adb.setMessage(R.string.about_prog_text);
             // иконка
