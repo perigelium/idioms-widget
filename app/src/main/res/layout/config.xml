@@ -57,7 +57,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom|start"
-                android:onClick="onClick"
+                android:onClick="onSettingsClick"
                 android:padding="6dp"
                 android:text="@string/settings_title">
             </Button>
@@ -67,7 +67,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
-                android:onClick="onClick"
+                android:onClick="onCloseClick"
                 android:padding="6dp"
                 android:text="@string/Close"
                 android:layout_column="2">

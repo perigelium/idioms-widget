@@ -170,7 +170,7 @@ public class ViewPagerAdapter extends PagerAdapter //implements CompoundButton.O
     {
         Log.d(LOG_TAG, "Removing view with position: " + position);
 
-        (container).removeView((FrameLayout) object);
+        (container).removeView((LinearLayout) object);
     }
 
     private void setItemContentView(int curId)
@@ -200,7 +200,11 @@ public class ViewPagerAdapter extends PagerAdapter //implements CompoundButton.O
             translation = itemContentInstance.getTranslation();
             engIdiom = itemContentInstance.getEngIdiom();
 
-            if(!translation.equals(engIdiom))
+            String loverCaseTranslation = translation.replaceAll("\\.","");
+            loverCaseTranslation = loverCaseTranslation.toLowerCase();
+            String loverCaseEngIdiom = engIdiom.toLowerCase();
+
+            if(!loverCaseEngIdiom.contains(loverCaseTranslation))
             {
                 fullText += translation + "\n\n";
             }

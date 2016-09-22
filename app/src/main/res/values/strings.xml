@@ -35,5 +35,7 @@
          \n\n\t © Alexandr Angan 2016
 
     </string>
+    <string name="dialog_note_title">Useful note</string>
+    <string name="dialog_note_text">"You can also install this software as a widget. \nIn this mode application shows pages as filmstrips.\nTap on widget opens page in full screen mode."</string>
 
 </resources>

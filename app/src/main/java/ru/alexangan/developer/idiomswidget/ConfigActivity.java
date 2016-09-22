@@ -1,7 +1,9 @@
 package ru.alexangan.developer.idiomswidget;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.appwidget.AppWidgetManager;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.AssetManager;
@@ -9,17 +11,21 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.widget.Toast;
 
 import java.io.IOException;
 
 public class ConfigActivity extends Activity {
 
     final static String LOG_TAG = "iw";
+    final int DIALOG_NOTE = 2;
     ViewPager viewPager;
     PagerAdapter adapter;
+    Boolean widgetNoteShown = false;
 
     public final static String WIDGET_PREF = "widget_prefs";
 
@@ -57,6 +63,10 @@ public class ConfigActivity extends Activity {
 
         setResult(RESULT_CANCELED, resultValue); // initial set negative answer
 
+            sharedPrefs = getSharedPreferences(WIDGET_PREF, MODE_PRIVATE);
+
+            curId = sharedPrefs.getInt("curId" + widgetID, 0);
+
             if(widgetFirstStart)
             {
                 setResult(RESULT_OK, resultValue);
@@ -66,10 +76,6 @@ public class ConfigActivity extends Activity {
         }
 
         setContentView(R.layout.config);
-
-        sharedPrefs = getSharedPreferences(WIDGET_PREF, MODE_PRIVATE);
-
-        curId = sharedPrefs.getInt("curId" + widgetID, 0);
 
         String[] Files;
 
@@ -89,29 +95,23 @@ public class ConfigActivity extends Activity {
 
         Log.d(LOG_TAG, "maxId: " + maxId);
 
+        if(maxId == -1) return;
+
         viewPager = (ViewPager) findViewById(R.id.pager);
         adapter = new ViewPagerAdapter(ConfigActivity.this);
         viewPager.setAdapter(adapter);
         viewPager.setCurrentItem(curId);
     }
 
-    public void onClick(View v)
+    public void onCloseClick(View v)
     {
+        exit();
+    }
 
-        if(v.getId() == R.id.btn_close_config)
-        {
-            setResult(RESULT_OK, resultValue);
-
-            //savePrefs();
-
-            finish();
-        }
-
-        if(v.getId() == R.id.btn_settings)
-        {
-            Intent intent = new Intent(this, PrefActivity.class);
-            startActivityForResult(intent, 0);
-        }
+    public void onSettingsClick(View v)
+    {
+        Intent intent = new Intent(this, PrefActivity.class);
+        startActivityForResult(intent, 0);
     }
 
     @Override
@@ -140,18 +140,48 @@ public class ConfigActivity extends Activity {
         */
     }
 
+    /*
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event)  {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
 
-            //savePrefs();
-            setResult(RESULT_OK, resultValue);
-
-            finish();
+            exit();
 
             return true;
         }
         return super.onKeyDown(keyCode, event);
+    }
+*/
+
+    @Override
+    public void onBackPressed() {
+        // super.onBackPressed();
+        exit();
+    }
+
+    @Override
+    protected void onUserLeaveHint()
+    {
+        //exit();
+
+        super.onUserLeaveHint();
+    }
+
+    public void exit()
+    {
+        setResult(RESULT_OK, resultValue);
+
+        if (!widgetNoteShown && widgetID == AppWidgetManager.INVALID_APPWIDGET_ID)
+        {
+            showDialog(DIALOG_NOTE);
+            widgetNoteShown = true;
+        }
+        else
+        {
+            finish();
+        }
+
+        //savePrefs();
     }
 
     /*
@@ -190,5 +220,46 @@ public class ConfigActivity extends Activity {
         ed.apply();
     }
     */
+
+    protected Dialog onCreateDialog(int id)
+    {
+        if (id == DIALOG_NOTE) {
+            //String aboutTitle = getString(R.string.about_prog_title) + " 1." + BuildConfig.VERSION_CODE;
+
+            AlertDialog.Builder adb = new AlertDialog.Builder(this);
+            // заголовок
+            adb.setTitle(getString(R.string.dialog_note_title));
+            // сообщение
+            adb.setMessage(getString(R.string.dialog_note_text));
+            // иконка
+            adb.setIcon(android.R.drawable.ic_dialog_info);
+            // кнопка положительного ответа
+            //adb.setPositiveButton(R.string.Yes, myClickListener);
+            // кнопка отрицательного ответа
+            //adb.setNegativeButton(R.string.No, myClickListener);
+            // кнопка нейтрального ответа
+            adb.setNeutralButton(R.string.Close, myClickListener);
+            // создаем диалог
+            return adb.create();
+        }
+        return super.onCreateDialog(id);
+    }
+
+    DialogInterface.OnClickListener myClickListener = new DialogInterface.OnClickListener() {
+        public void onClick(DialogInterface dialog, int which)
+        {
+            switch (which)
+            {
+                case Dialog.BUTTON_POSITIVE:
+                    break;
+
+                case Dialog.BUTTON_NEGATIVE:
+                    break;
+
+                case Dialog.BUTTON_NEUTRAL:
+                    break;
+            }
+        }
+    };
 }
 
